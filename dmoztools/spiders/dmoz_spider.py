@@ -28,13 +28,12 @@ class DmozToolsSpider(scrapy.Spider):
                 yield scrapy.Request(url, callback=self.parse_category_content)
 
     def parse_category_content(self, response):
-
         sites_xpath = response.xpath('//*[@id="site-list-content"]//div[@class="site-item "]//div['
                                      '@class="title-and-desc"]')
         # Find the category, url, title, description and tags
         if sites_xpath:
-            tags = response.xpath('//*[@class="breadcrumb"]//text()').extract()
-            tags = [tag.lstrip(' ') for tag in tags]
+            tags = response.xpath('//*[@id="doc"]/section[1]/div[2]//text()').extract()
+            tags = [tag.strip() for tag in tags if tag.strip() != ''][:-1]
             for site in sites_xpath:
                 item = DmoztoolsItem()
                 item['category'] = tags[0]
