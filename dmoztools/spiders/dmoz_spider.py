@@ -30,6 +30,7 @@ class DmozToolsSpider(scrapy.Spider):
     def parse_category_content(self, response):
         sites_xpath = response.xpath('//*[@id="site-list-content"]//div[@class="site-item "]//div['
                                      '@class="title-and-desc"]')
+        # Find the category, url, title, description and tags
         if sites_xpath:
             tags = ';'.join(response.url.split('/')[3:-1])
             for site in sites_xpath:

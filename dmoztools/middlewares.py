@@ -102,34 +102,3 @@ class DmoztoolsDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
-
-
-class ProxyMiddleware(object):
-    def __init__(self, proxy_url):
-        self.logger = logging.getLogger(__name__)
-        self.proxy_url = proxy_url
-
-        if self.proxy_url is None:
-            raise KeyError('Need to specify proxy url!')
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        settings = crawler.settings
-        return cls(proxy_url=settings.get('PROXY_URL'))
-
-    def get_proxy(self):
-        response = requests.get(self.proxy_url)
-        proxy = response.text
-        logging.info('Get proxy successfully, proxy ip is %s' % proxy)
-        return proxy
-
-    def process_request(self, request, spider):
-        proxy = self.get_proxy()
-        request.meta['proxy'] = 'http://' + proxy
-
-    def process_response(self, request, response, spider):
-        if response.status != 200:
-            print("Request Proxy again...")
-            request.meta['proxy'] = self.get_proxy()
-            return request
-        return response
