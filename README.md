@@ -32,5 +32,5 @@ scrapy crawl dmoztools_spider
 # Sports
 # Kids_and_Teens
 # World
-scrapy crawl dmoztools_spider -a <category_name>
+scrapy crawl dmoztools_spider -a category=<category_name>
 ```
