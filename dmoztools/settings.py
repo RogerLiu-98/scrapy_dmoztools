@@ -91,4 +91,4 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-PROXY_URL = 'http://dynamic.goubanjia.com/dynamic/get/31663c595be3016e51b2d2829523008b.html?sep=3'
+# PROXY_URL = 'http://dynamic.goubanjia.com/dynamic/get/31663c595be3016e51b2d2829523008b.html?sep=3'
