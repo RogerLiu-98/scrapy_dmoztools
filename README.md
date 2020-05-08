@@ -1,6 +1,6 @@
 # scrapy_dmoztools
 ### Basic Info
-This is a spider written by scarpy that can crawl websites on [Dmoztools](http://dmoztools.net/), you can either specify the category you want or you can just set the paramter to null. In this case, the spider will automatically crawl every category on Dmoztools.
+This is a spider written by scrapy that can crawl websites on [Dmoztools](http://dmoztools.net/), you can either specify the category you want or you can just set the paramter to null. In this case, the spider will automatically crawl every category on Dmoztools.
 ### How to use
 * Download the source code:
 
@@ -32,5 +32,5 @@ scrapy crawl dmoztools_spider
 # Sports
 # Kids_and_Teens
 # World
-scrapy crawl dmoztools_spider -a <category_name>
+scrapy crawl dmoztools_spider -a category=<category_name>
 ```
