@@ -5,6 +5,7 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import scrapy
 from scrapy import signals
 import json, requests, logging
 
@@ -108,7 +109,6 @@ class ProxyMiddleware(object):
     def __init__(self, proxy_url):
         self.logger = logging.getLogger(__name__)
         self.proxy_url = proxy_url
-
         if self.proxy_url is None:
             raise KeyError('Need to specify proxy url!')
 
@@ -133,3 +133,8 @@ class ProxyMiddleware(object):
             request.meta['proxy'] = self.get_proxy()
             return request
         return response
+
+    def process_exception(self, request, exception, spider):
+        print('Retry...')
+        request.meta['proxy'] = self.get_proxy()
+        yield scrapy.Request(request.url, meta=request.meta)
