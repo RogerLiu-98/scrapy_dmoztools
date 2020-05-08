@@ -32,14 +32,14 @@ class DmozToolsSpider(scrapy.Spider):
                                      '@class="title-and-desc"]')
         # Find the category, url, title, description and tags
         if sites_xpath:
-            tags = ';'.join(response.url.split('/')[3:-1])
+            tags = response.url.split('/')[3:-1]
             for site in sites_xpath:
                 item = DmoztoolsItem()
-                item['category'] = self.category
+                item['category'] = tags[0]
                 item['url'] = site.xpath('a/@href').extract()[0].strip()
                 item['title'] = site.xpath('a/div/text()').extract()[0].strip()
                 item['description'] = site.xpath('div/text()').extract()[0].strip()
-                item['tags'] = tags
+                item['tags'] = ';'.join(tags)
                 yield item
 
         categories_xpath = response.xpath('//*[@id="subcategories-section"]//div[@class="cat-item"]//@href')
