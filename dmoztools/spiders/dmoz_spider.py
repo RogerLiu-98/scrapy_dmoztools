@@ -38,10 +38,11 @@ class DmozToolsSpider(scrapy.Spider):
                 item = DmoztoolsItem()
                 item['category'] = tags[0]
                 item['url'] = site.xpath('a/@href').extract()[0].strip()
-                item['title'] = site.xpath('a/div/text()').extract()[0].strip()
+                item['name'] = site.xpath('a/div/text()').extract()[0].strip()
                 item['description'] = site.xpath('div/text()').extract()[0].strip()
                 item['tags'] = ';'.join(tags)
-                yield item
+                item['website_title'] = ''
+                yield scrapy.Request(item['url'], meta={"item": item}, callback=self.parse_title, dont_filter=True)
 
         categories_xpath = response.xpath('//*[@id="subcategories-section"]//div[@class="cat-item"]//@href')
         if categories_xpath:
@@ -49,3 +50,13 @@ class DmozToolsSpider(scrapy.Spider):
             for href in all_href:
                 url = response.urljoin(href)
                 yield scrapy.Request(url, callback=self.parse_category_content)
+
+    def parse_title(self, response):
+        item = response.meta['item']
+        if response.status != 200:
+            yield item
+        else:
+            title = response.xpath('//title//text()')
+            if title:
+                item['website_title'] = title.extract()[0].strip()
+            yield item

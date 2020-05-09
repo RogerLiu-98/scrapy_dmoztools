@@ -10,7 +10,7 @@ import csv
 
 class DmoztoolsPipeline_toCSV(object):
     def __init__(self):
-        columns = ['category', 'url', 'title', 'description', 'tags']
+        columns = ['category', 'url', 'name', 'description', 'tags', 'website_title']
         file_name = 'output.csv'
         self.file = open(file_name, 'w', newline='', encoding='utf-8')
         self.writer = csv.DictWriter(self.file, columns)
